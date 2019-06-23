@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+    mysqlsails:
+        build: ./config/db/
+        image: mysql
+        container_name: karyakita_mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: P@ssw0rd|mysql
+            MYSQL_DATABASE: karyakita_dev
+            MYSQL_USER: mygetzu
+            MYSQL_PASSWORD: P@ssw0rd|mysql
+#        volumes:
+#        - mysql-data:/var/lib/mysql
+        ports:
+        - 33060:33060
+        networks:
+            app-network:
+                ipv4_address: 192.168.28.2
+
+    sailsjs:
+        build: ./
+#        image: nodejs
+        container_name: karyakita_backend_node
+        restart: unless-stopped
+        env_file: .env
+        ports:
+        - 1337:80
+        volumes:
+        - '.:/usr/src/app'
+        networks:
+            app-network:
+                ipv4_address: 192.168.28.3
+        depends_on:
+          - mysqlsails
+#        command: [ "./wait-for.sh", "0.0.0.0:33060", "--", "node", "--inspect=0.0.0.0", "/usr/src/app/app.js" ]
+
+networks:
+    app-network:
+        driver: bridge
+        ipam:
+          config:
+              - subnet : 192.168.28.0/24
+
+volumes:
+    mysql-data:
