@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-    mysqlsails:
+    mysqldb:
         build: ./config/db/
         image: mysql
-        container_name: karyakita_mysql
+        container_name: karyakita_global_db
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: P@ssw0rd|mysql
@@ -17,23 +17,70 @@ services:
         - 33060:33060
         networks:
             app-network:
-                ipv4_address: 192.168.28.2
+                ipv4_address: 192.168.30.10
 
-    sailsjs:
-        build: ./
-#        image: nodejs
-        container_name: karyakita_backend_node
+    service_karya:
+        build: ./services/karya-service/
+        container_name: karyakita_service_karya
         restart: unless-stopped
         env_file: .env
         ports:
-        - 1337:80
+        - 9001:80
         volumes:
-        - '.:/usr/src/app'
+        - './services/karya-service:/usr/src/app'
         networks:
             app-network:
-                ipv4_address: 192.168.28.3
+                ipv4_address: 192.168.30.11
         depends_on:
-          - mysqlsails
+          - mysqldb
+#        command: [ "./wait-for.sh", "0.0.0.0:33060", "--", "node", "--inspect=0.0.0.0", "/usr/src/app/app.js" ]
+
+    service_designer:
+      build: ./services/designer-service/
+      container_name: karyakita_service_designer
+      restart: unless-stopped
+      env_file: .env
+      ports:
+      - 9002:80
+      volumes:
+      - './services/designer-service:/usr/src/app'
+      networks:
+        app-network:
+          ipv4_address: 192.168.30.12
+      depends_on:
+      - mysqldb
+#        command: [ "./wait-for.sh", "0.0.0.0:33060", "--", "node", "--inspect=0.0.0.0", "/usr/src/app/app.js" ]
+
+    service_user:
+      build: ./services/user-service/
+      container_name: karyakita_service_user
+      restart: unless-stopped
+      env_file: .env
+      ports:
+      - 9003:80
+      volumes:
+      - './services/user-service:/usr/src/app'
+      networks:
+        app-network:
+          ipv4_address: 192.168.30.13
+      depends_on:
+      - mysqldb
+#        command: [ "./wait-for.sh", "0.0.0.0:33060", "--", "node", "--inspect=0.0.0.0", "/usr/src/app/app.js" ]
+
+    service_transaction:
+      build: ./services/transaction-service/
+      container_name: karyakita_service_transaction
+      restart: unless-stopped
+      env_file: .env
+      ports:
+      - 9004:80
+      volumes:
+      - './services/transaction-service:/usr/src/app'
+      networks:
+        app-network:
+          ipv4_address: 192.168.30.14
+      depends_on:
+      - mysqldb
 #        command: [ "./wait-for.sh", "0.0.0.0:33060", "--", "node", "--inspect=0.0.0.0", "/usr/src/app/app.js" ]
 
 networks:
@@ -41,7 +88,7 @@ networks:
         driver: bridge
         ipam:
           config:
-              - subnet : 192.168.28.0/24
+              - subnet : 192.168.30.0/24
 
 volumes:
     mysql-data:

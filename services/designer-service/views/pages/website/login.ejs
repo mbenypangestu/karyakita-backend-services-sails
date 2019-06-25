@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <%- partial('../partials/head.ejs') %>
+</head>
+<body>
+    <%- partial('../partials/navbar.ejs') %>
+
+    <!--contact-->
+    <div class="content">
+        <div class="main-1">
+            <div class="container">
+                <div class="login-page">
+                    <div class="account_grid">
+                        <div class="col-md-6 login-left">
+                            <h3>NEW CUSTOMERS</h3>
+                            <p>Jika anda belum memiliki akun, silahkan register agar dapat melakukan pemesanan.</p>
+                            <a class="acount-btn" href="account.html">Create an Account</a>
+                        </div>
+                        <div class="col-md-6 login-right">
+                            <h3>REGISTERED CUSTOMERS</h3>
+                            <p>Jika anda sudah memiliki akun, silahkan login.</p>
+                            <form action="/">
+                                <div>
+                                    <span>Email<label>*</label></span>
+                                    <input type="text">
+                                </div>
+                                <div>
+                                    <span>Password<label>*</label></span>
+                                    <input type="text">
+                                </div>
+                                <a class="forgot" href="#">Forgot Your Password?</a>
+                                <input type="submit" value="Login">
+                            </form>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- login -->
+
+    <%- partial('../partials/footer.ejs') %>
+
+</body>
+</html>

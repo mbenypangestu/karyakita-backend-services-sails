@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <%- partial('../partials/head.ejs') %>
+</head>
+<body>
+    <%- partial('../partials/navbar.ejs') %>
+
+    <!--<div class="banner-section">-->
+        <!--<div class="container">-->
+            <!--<div class="banner-grids">-->
+                <!--<div class="col-md-6 banner-grid">-->
+                    <!--<h2>the latest collections</h2>-->
+                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
+                    <!--<a href="products.html" class="button"> shop now </a>-->
+                <!--</div>-->
+            <!--<div class="col-md-6 banner-grid1">-->
+                    <!--<img src="styles/images/p2.png" class="img-responsive center-block " alt=""/>-->
+            <!--</div>-->
+            <!--<div class="clearfix"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="banner-bottom">
+        <div class="gallery-cursual">
+            <!--requried-jsfiles-for owl-->
+            <script src="styles/js/owl.carousel.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $("#owl-demo").owlCarousel({
+                        items : 2,
+                        lazyLoad : true,
+                        autoPlay : true,
+                        pagination : false,
+                    });
+                });
+            </script>
+            <!--requried-jsfiles-for owl -->
+            <!--start content-slider-->
+            <div id="owl-demo" class="owl-carousel text-center">
+                <div class="item">
+                    <img class="lazyOwl" data-src="styles/images/des1.png" alt="name">
+                    <div class="item-info">
+                        <h5>Lorem ipsum</h5>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="lazyOwl" data-src="styles/images/des2.png" alt="name">
+                    <div class="item-info">
+                        <h5>Lorem ipsum</h5>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="lazyOwl" data-src="styles/images/banner1.jpeg" alt="name">
+                    <div class="item-info">
+                        <h5>Lorem ipsum</h5>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="lazyOwl" data-src="styles/images/banner2.jpeg" alt="name">
+                    <div class="item-info">
+                        <h5>Lorem ipsum</h5>
+                    </div>
+                </div>
+            </div>
+            <!--sreen-gallery-cursual-->
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="gallery">
+        <div class="container">
+            <h3>Recomended products</h3>
+            <div class="gallery-grids">
+
+                <% list_karya.forEach(function (item_data) { %>
+                    <div class="col-md-3 gallery-grid ">
+                        <a href="/karya/detail_karya/<%= item_data.id %>"><img src="<%= item_data.deploy_url %>"  height="300" width="200" class="center-block" alt=""/>
+                            <div class="gallery-info">
+                                <div class="quick">
+                                    <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
+                                </div>
+                            </div></a>
+                        <div class="galy-info">
+                            <p><%= item_data.nama %></p>
+                            <div class="galry">
+                                <div class="prices">
+                                    <h5 class="item_price">Rp. <%= item_data.harga %></h5>
+                                </div>
+                                <div class="rating">
+                                    <span>☆</span>
+                                    <span>☆</span>
+                                    <span>☆</span>
+                                    <span>☆</span>
+                                    <span>☆</span>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+    <%- partial('../partials/subscribe.ejs') %>
+
+    <%- partial('../partials/footer.ejs') %>
+
+</body>
+</html>
